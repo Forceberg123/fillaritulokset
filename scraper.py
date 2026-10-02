@@ -1,88 +1,26 @@
 import json
 from datetime import datetime, timedelta
 import requests
-from bs4::BeautifulSoup import BeautifulSoup # type: ignore
 from bs4 import BeautifulSoup
 
-# Kaikki seurattavat suomalaiset pyöräilijät (miehet ja naiset)
 SEURATTAVAT = [
     # Miehet
-    {
-        "nimi": "Axel Källberg",
-        "url_nimi": "axel-kallberg",
-        "talli": "Lucky Sport Cycling Team"
-    },
-    {
-        "nimi": "Kasper Borremans",
-        "url_nimi": "kasper-borremans",
-        "talli": "Bahrain Victorious Development Team"
-    },
-    {
-        "nimi": "Matias Ahtosalo",
-        "url_nimi": "matias-ahtosalo",
-        "talli": "UN Cycling Team"
-    },
-    {
-        "nimi": "Riku Övermark",
-        "url_nimi": "riku-overmark",
-        "talli": "Ei tallia / Seura ei määritelty"
-    },
-    {
-        "nimi": "Petja Teppo",
-        "url_nimi": "petja-teppo",
-        "talli": "UN Cycling Team"
-    },
-    {
-        "nimi": "Lauri Pitkänen",
-        "url_nimi": "lauri-pitkanen",
-        "talli": "Ei tallia / Seura ei määritelty"
-    },
-    {
-        "nimi": "Severi Savukoski",
-        "url_nimi": "severi-savukoski",
-        "talli": "Ei tallia / Seura ei määritelty"
-    },
-    {
-        "nimi": "Miko Pirinen",
-        "url_nimi": "miko-pirinen",
-        "talli": "NSN Development Team"
-    },
-    {
-        "nimi": "Juuso Puhakka",
-        "url_nimi": "juuso-puhakka",
-        "talli": "TWD Länken"
-    },
+    {"nimi": "Axel Källberg", "url_nimi": "axel-kallberg", "talli": "Lucky Sport Cycling Team"},
+    {"nimi": "Kasper Borremans", "url_nimi": "kasper-borremans", "talli": "Bahrain Victorious Development Team"},
+    {"nimi": "Matias Ahtosalo", "url_nimi": "matias-ahtosalo", "talli": "UN Cycling Team"},
+    {"nimi": "Riku Övermark", "url_nimi": "riku-overmark", "talli": "Ei tallia / Seura ei määritelty"},
+    {"nimi": "Petja Teppo", "url_nimi": "petja-teppo", "talli": "UN Cycling Team"},
+    {"nimi": "Lauri Pitkänen", "url_nimi": "lauri-pitkanen", "talli": "Ei tallia / Seura ei määritelty"},
+    {"nimi": "Severi Savukoski", "url_nimi": "severi-savukoski", "talli": "Ei tallia / Seura ei määritelty"},
+    {"nimi": "Miko Pirinen", "url_nimi": "miko-pirinen", "talli": "NSN Development Team"},
+    {"nimi": "Juuso Puhakka", "url_nimi": "juuso-puhakka", "talli": "TWD Länken"},
     # Naiset
-    {
-        "nimi": "Anniina Ahtosalo",
-        "url_nimi": "anniina-ahtosalo",
-        "talli": "Uno-X Mobility"
-    },
-    {
-        "nimi": "Wilma Aintila",
-        "url_nimi": "wilma-aintila",
-        "talli": "CANYON//SRAM"
-    },
-    {
-        "nimi": "Heidi Antikainen",
-        "url_nimi": "heidi-antikainen",
-        "talli": "Minimax Cycling Team"
-    },
-    {
-        "nimi": "Maija Pentsinen",
-        "url_nimi": "maija-pentsinen",
-        "talli": "Ei tallia / Seura ei määritelty"
-    },
-    {
-        "nimi": "Viivi Turpeinen",
-        "url_nimi": "viivi-turpeinen",
-        "talli": "Minimax WB Ladies"
-    },
-    {
-        "nimi": "Sanni Tuukkanen",
-        "url_nimi": "sanni-tuukkanen",
-        "talli": "Kasseien Fiets Huis CT"
-    }
+    {"nimi": "Anniina Ahtosalo", "url_nimi": "anniina-ahtosalo", "talli": "Uno-X Mobility"},
+    {"nimi": "Wilma Aintila", "url_nimi": "wilma-aintila", "talli": "CANYON//SRAM"},
+    {"nimi": "Heidi Antikainen", "url_nimi": "heidi-antikainen", "talli": "Minimax Cycling Team"},
+    {"nimi": "Maija Pentsinen", "url_nimi": "maija-pentsinen", "talli": "Ei tallia / Seura ei määritelty"},
+    {"nimi": "Viivi Turpeinen", "url_nimi": "viivi-turpeinen", "talli": "Minimax WB Ladies"},
+    {"nimi": "Sanni Tuukkanen", "url_nimi": "sanni-tuukkanen", "talli": "Kasseien Fiets Huis CT"}
 ]
 
 HEADERS = {
@@ -90,7 +28,6 @@ HEADERS = {
 }
 
 def hae_urheilijan_tiedot(urheilija):
-    """Hakee yksittäisen urheilijan tulevat kisat ja tulokset ProCyclingStatsista."""
     url = f"https://www.procyclingstats.com/rider/{urheilija['url_nimi']}"
     print(f"Haetaan tietoja: {urheilija['nimi']} ({urheilija['talli']})...")
     
@@ -104,13 +41,23 @@ def hae_urheilijan_tiedot(urheilija):
             return tulevat_kisat, tulokset
 
         soup = BeautifulSoup(response.text, 'html.parser')
-        tanaan = datetime.now().date()
-        kahden_viikon_paasta = tanaan + timedelta(days=14)
-        viikon_takana = tanaan - timedelta(days=7)
-
-        # Tähän haetaan PCS-sivun taulukkorakenteesta tulevat kisat ja tulokset.
-        # Skripti jäsentää sivun taulukot automaattisesti.
-
+        
+        # ProCyclingStats käyttää profiilisivuilla taulukoita (esim. rintanumerot, tulokset, tulevat kilpailut)
+        # Etsitään sivun taulukot ja jäsennetään ne
+        tables = soup.find_all('table')
+        
+        # Käydään läpi taulukot ja poimitaan datat
+        for table in tables:
+            rows = table.find_all('tr')
+            for row in rows:
+                cols = row.find_all('td')
+                if len(cols) >= 3:
+                    tekstit = [col.get_text(strip=True) for col in cols]
+                    
+                    # Esimerkkitunnistus: Jos riviltä löytyy päivämäärämuoto tai kilpailun tietoja, 
+                    # voimme luokitella ne joko tuleviksi tai tuloksiksi.
+                    # (Profiilisivun rakenteen mukaisesti voimme täsmentää tätä tarkemmin.)
+                    
     except Exception as e:
         print(f"  Virhe käsiteltäessä urheilijaa {urheilija['nimi']}: {e}")
 
@@ -127,7 +74,7 @@ def paivita_data():
 
     data = {
         "paivitetty": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "suomalaiset": [ {"nimi": k["nimi"], "talli": k["talli"]} for k in SEURATTAVAT ],
+        "suomalaiset": [{"nimi": k["nimi"], "talli": k["talli"]} for k in SEURATTAVAT],
         "tulokset": kaikki_tulokset,
         "tulevat_kisat": kaikki_tulevat
     }
