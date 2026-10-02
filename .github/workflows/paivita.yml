@@ -1,0 +1,40 @@
+name: Paivita pyorailydata
+
+on:
+  schedule:
+    # Ajetaan joka päivä klo 17:00 UTC (eli klo 20:00 Suomen kesäaikaa)
+    - cron: '17 0 * * *'
+  # Mahdollistaa myös skriptin ajamisen käsin napin painalluksella GitHubista
+  workflow_dispatch:
+
+jobs:
+  paivita:
+    runs-on: ubuntu-latest
+    
+    # Annetaan oikeudet tallentaa muutokset takaisin repositorioon
+    permissions:
+      contents: write
+
+    steps:
+      - name: Hae koodi repositoriosta
+        uses: actions/checkout@v4
+
+      - name: Asenna Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Asenna tarvittavat kirjastot
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Aja scraper.py
+        run: python scraper.py
+
+      - name: Tallenna muutokset data.json -tiedostoon
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "bot@users.noreply.github.com"
+          git add data.json
+          # Tarkistetaan onko data.json muuttunut, ja jos on, tehdään commit ja push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Automaattinen päivitys: data.json [skip ci]" && git push)
