@@ -42,11 +42,13 @@ def hae_urheilijan_tiedot(urheilija):
 
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # ProCyclingStats käyttää profiilisivuilla taulukoita (esim. rintanumerot, tulokset, tulevat kilpailut)
-        # Etsitään sivun taulukot ja jäsennetään ne
+        # PCS tallentaa kilpailutietueet ja tulokset sivun taulukoihin
         tables = soup.find_all('table')
         
-        # Käydään läpi taulukot ja poimitaan datat
+        tanaan = datetime.now().date()
+        rajapvm_tulevat = tanaan + timedelta(days=14)
+        rajapvm_menneet = tanaan - timedelta(days=7)
+
         for table in tables:
             rows = table.find_all('tr')
             for row in rows:
@@ -54,10 +56,22 @@ def hae_urheilijan_tiedot(urheilija):
                 if len(cols) >= 3:
                     tekstit = [col.get_text(strip=True) for col in cols]
                     
-                    # Esimerkkitunnistus: Jos riviltä löytyy päivämäärämuoto tai kilpailun tietoja, 
-                    # voimme luokitella ne joko tuleviksi tai tuloksiksi.
-                    # (Profiilisivun rakenteen mukaisesti voimme täsmentää tätä tarkemmin.)
+                    # Etsitään rivejä, joissa voisi olla päivämäärä ja kilpailun tiedot
+                    # (PCS-rakenteessa sarakkeet sisältävät tyypillisesti pvm, nimen ja sijoituksen)
+                    otsikko = tekstit[1] if len(tekstit) > 1 else ""
                     
+                    # Tarkastellaan löytyykö riviltä sijoitustietoja (esim. Top 3: 1, 2, 3 tai "1st", "2nd", "3rd")
+                    for text in tekstit:
+                        if text in ["1", "2", "3", "1st", "2nd", "3rd"]:
+                            tulokset.append({
+                                "urheilija": urheilija["nimi"],
+                                "talli": urheilija["talli"],
+                                "kilpailu": otsikko,
+                                "sijoitus": text,
+                                "pvm": tanaan.strftime("%Y-%m-%d") # Varmistetaan perustieto
+                            })
+                            break
+
     except Exception as e:
         print(f"  Virhe käsiteltäessä urheilijaa {urheilija['nimi']}: {e}")
 
