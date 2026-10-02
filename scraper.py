@@ -41,13 +41,7 @@ def hae_urheilijan_tiedot(urheilija):
             return tulevat_kisat, tulokset
 
         soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # PCS tallentaa kilpailutietueet ja tulokset sivun taulukoihin
         tables = soup.find_all('table')
-        
-        tanaan = datetime.now().date()
-        rajapvm_tulevat = tanaan + timedelta(days=14)
-        rajapvm_menneet = tanaan - timedelta(days=7)
 
         for table in tables:
             rows = table.find_all('tr')
@@ -56,21 +50,30 @@ def hae_urheilijan_tiedot(urheilija):
                 if len(cols) >= 3:
                     tekstit = [col.get_text(strip=True) for col in cols]
                     
-                    # Etsitään rivejä, joissa voisi olla päivämäärä ja kilpailun tiedot
-                    # (PCS-rakenteessa sarakkeet sisältävät tyypillisesti pvm, nimen ja sijoituksen)
-                    otsikko = tekstit[1] if len(tekstit) > 1 else ""
-                    
-                    # Tarkastellaan löytyykö riviltä sijoitustietoja (esim. Top 3: 1, 2, 3 tai "1st", "2nd", "3rd")
-                    for text in tekstit:
-                        if text in ["1", "2", "3", "1st", "2nd", "3rd"]:
-                            tulokset.append({
-                                "urheilija": urheilija["nimi"],
-                                "talli": urheilija["talli"],
-                                "kilpailu": otsikko,
-                                "sijoitus": text,
-                                "pvm": tanaan.strftime("%Y-%m-%d") # Varmistetaan perustieto
-                            })
-                            break
+                    # Etsitään tekstisisältöä, jossa on pituus ja joka näyttää kilpailulta
+                    # (jätetään pelkät numerot pois nimestä)
+                    kilpailun_nimi = ""
+                    pvm = ""
+                    sijoitus = ""
+
+                    for t in tekstit:
+                        # Jos teksti on pidempi kuin pelkkä numero, se on todennäköisesti kisan nimi
+                        if len(t) > 3 and not t.isdigit():
+                            if not kilpailun_nimi:
+                                kilpailun_nimi = t
+                        # Etsitään sijoitustiedot (esim. 1, 2, 3)
+                        elif t in ["1", "2", "3", "1st", "2nd", "3rd"]:
+                            sijoitus = t
+
+                    # Jos löydettiin järkevä kisan nimi ja sijoitus, tallennetaan tuloksiin
+                    if kilpailun_nimi and sijoitus:
+                        tulokset.append({
+                            "urheilija": urheilija["nimi"],
+                            "talli": urheilija["talli"],
+                            "kilpailu": kilpailun_nimi,
+                            "sijoitus": sijoitus,
+                            "pvm": "Ei määritelty" # Tarkennetaan kunhan näkyy miten PCS tarjoilee päivämäärät rivillä
+                        })
 
     except Exception as e:
         print(f"  Virhe käsiteltäessä urheilijaa {urheilija['nimi']}: {e}")
