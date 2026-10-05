@@ -1,5 +1,5 @@
-import json
 from datetime import datetime
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -87,6 +87,19 @@ def paivita_data():
         tulevat, tulokset = hae_urheilijan_tiedot(kusk)
         kaikki_tulevat.extend(tulevat)
         kaikki_tulokset.extend(tulokset)
+
+    # Järjestetään tulokset päivämäärän mukaan niin, että uusin on aina ylimpänä.
+    # Oletetaan, että pvm on muodossa, joka vertautuu oikein (tai jos siinä on päivä.kuukausi, 
+    # varmistetaan lajittelu. Jos pvm on esim. "DD.MM", datetime auttaa tarvittaessa).
+    try:
+        kaikki_tulokset = sorted(
+            kaikki_tulokset, 
+            key=lambda x: datetime.strptime(x['pvm'], '%d.%m') if '.' in x['pvm'] else datetime.min, 
+            reverse=True
+        )
+    except Exception:
+        # Varakopio: jos päivämääräformaatissa on poikkeuksia, luotetaan listan kääntämiseen
+        kaikki_tulokset.reverse()
 
     data = {
         "paivitetty": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
