@@ -70,36 +70,6 @@
             font-size: 1.25rem;
         }
 
-        /* Kilpailukohtainen ryhmäkortti */
-        .race-group-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .race-group-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #f1f5f9;
-            margin-bottom: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 0.5rem;
-        }
-
-        .race-rider-tag {
-            font-size: 0.85rem;
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--primary-color);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -222,14 +192,11 @@
                 text-align: left;
             }
 
-            /* Järjestetään solut mobiilikortissa: Sijoitus, Etappi/Luokitus, Päivämäärä */
-            td[data-label="Sijoitus"] { order: 1; }
-            td[data-label="Etappi / Luokitus"] { 
-                order: 2; 
-                font-weight: 600;
-                color: #f8fafc;
-            }
-            td[data-label="Päivämäärä"] { order: 3; }
+            /* Mobiilin järjestys: Urheilija, Sija, Kisa, Päivä */
+            td[data-label="Urheilija"] { order: 1; font-weight: 600; color: var(--primary-color); }
+            td[data-label="Sijoitus"] { order: 2; }
+            td[data-label="Kilpailu"] { order: 3; color: #f8fafc; }
+            td[data-label="Päivämäärä"] { order: 4; }
         }
     </style>
 </head>
@@ -251,7 +218,7 @@
             </div>
         </div>
 
-        <!-- Viimeisimmät tulokset (Ryhmiteltynä kilpailuittain) -->
+        <!-- Viimeisimmät tulokset -->
         <div class="card">
             <h2>Viimeisimmät tulokset</h2>
             <div id="tulokset-container">
@@ -269,6 +236,17 @@
             return 'sijoitus-badge';
         }
 
+        // Apufunktio päivämäärän muuntamiseen vertailtavaan muotoon (DD.MM.YYYY)
+        function parsePvm(pvmStr) {
+            if (!pvmStr) return new Date(0);
+            const cleanPvm = String(pvmStr).split('-')[0].trim();
+            const parts = cleanPvm.split('.');
+            if (parts.length >= 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return new Date(0);
+        }
+
         async function lataaData() {
             try {
                 const response = await fetch('data.json');
@@ -280,9 +258,11 @@
                     document.getElementById('update-info').innerText = `Viimeksi päivitetty: ${data.paivitetty}`;
                 }
 
-                // 1. Tulevat kisat
+                // 1. Tulevat kisat (lähin ensin)
                 const tulevatContainer = document.getElementById('tulevat-container');
                 if (data.tulevat_kisat && data.tulevat_kisat.length > 0) {
+                    data.tulevat_kisat.sort((a, b) => parsePvm(a.pvm) - parsePvm(b.pvm));
+
                     tulevatContainer.innerHTML = `
                         <div class="table-responsive">
                             <table>
@@ -307,80 +287,41 @@
                     `;
                 }
 
-                // 2. Viimeisimmät tulokset ryhmiteltynä kilpailun mukaan
+                // 2. Viimeisimmät tulokset (pakotettu globaali aikajärjestys: uusin ensin kaikkien urheilijoiden osalta)
                 const tuloksetContainer = document.getElementById('tulokset-container');
                 if (data.tulokset && data.tulokset.length > 0) {
-                    // Ryhmitellään tulokset kisan ja urheilijan mukaan (esim. {"Tour de Romandie - Axel Källberg": [rivit...]})
-                    const ryhmat = {};
-                    data.tulokset.forEach(t => {
-                        // Puhdistetaan kisan nimestä mahdollinen vanha etappimerkintä jos se on erillään, 
-                        // mutta perus Procyclingstats-linkissä kisan nimi sisältää usein suoraan etapin (esim. "Tour de France - Stage 1")
-                        let kisanPuhdasNimi = t.kilpailu;
-                        let etappiTaiLuokitus = "Yleiskilpailu / Tulos";
+                    // Järjestetään koko tuloslista päivämäärän mukaan laskevasti (uusin ensin)
+                    data.tulokset.sort((a, b) => parsePvm(b.pvm) - parsePvm(a.pvm));
 
-                        // Jos nimessä on viiva tai etappitietoa, erotetaan ne selkeyden vuoksi
-                        if (kisanPuhdasNimi.includes(' - Stage ') || kisanPuhdasNimi.includes(' - Prologue') || kisanPuhdasNimi.includes(' - Yleiskilpailu')) {
-                            const osat = kisanPuhdasNimi.split(' - ');
-                            kisanPuhdasNimi = osat[0];
-                            etappiTaiLuokitus = osat.slice(1).join(' - ');
-                            // Käännetään mahdolliset englanninkieliset etapit tai luokitukset
-                            etappiTaiLuokitus = etappiTaiLuokitus.replace("Stage", "Etappi").replace("General classification", "Yleiskilpailu").replace("Mountains classification", "Mäkikilpailu").replace("Points classification", "Pistekilpailu");
-                        } else if (kisanPuhdasNimi.includes('Stage ')) {
-                            etappiTaiLuokitus = kisanPuhdasNimi.replace("Stage", "Etappi");
-                            kisanPuhdasNimi = "Yksittäinen kilpailu / Etappi";
-                        }
-
-                        const avain = `${kisanPuhdasNimi}___${t.urheilija}`;
-                        if (!ryhmat[avain]) {
-                            ryhmat[avain] = {
-                                kisa: kisanPuhdasNimi,
-                                urheilija: t.urheilija,
-                                talli: t.talli,
-                                rivit: []
-                            };
-                        }
-                        ryhmat[avain].rivit.render = true; // merkintä
-                        ryhmat[avain].rivit.push({
-                            kuvaus: etappiTaiLuokitus,
-                            sijoitus: t.sijoitus,
-                            pvm: t.pvm
-                        });
-                    });
-
-                    // Rakennetaan HTML ryhmistä
-                    let htmlSisalto = '';
-                    Object.values(ryhmat.forEach ? Object.values(ryhmat) : Object.keys(ryhmat).map(k => ryhmat[k])).forEach(r => {
-                        htmlSisalto += `
-                            <div class="race-group-card">
-                                <div class="race-group-title">
-                                    <span>🏆 ${r.kisa}</span>
-                                    <span class="race-rider-tag">${r.urheilija}</span>
-                                </div>
-                                <div class="table-responsive">
-                                    <table>
-                                        <thead>
+                    tuloksetContainer.innerHTML = `
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sijoitus</th>
+                                        <th>Urheilija</th>
+                                        <th>Kilpailu</th>
+                                        <th>Päivämäärä</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.tulokset.map(k => {
+                                        const kisaNimi = (k.etappi_tai_luokitus && k.etappi_tai_luokitus !== "Yksittäinen kilpailu")
+                                            ? `${k.kilpailu} (${k.etappi_tai_luokitus})`
+                                            : k.kilpailu;
+                                        return `
                                             <tr>
-                                                <th>Sijoitus</th>
-                                                <th>Etappi / Luokitus</th>
-                                                <th>Päivämäärä</th>
+                                                <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                                                <td data-label="Urheilija"><strong>${k.urheilija}</strong></td>
+                                                <td data-label="Kilpailu">${kisaNimi}</td>
+                                                <td data-label="Päivämäärä">${k.pvm}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${r.rivit.map(row => `
-                                                <tr>
-                                                    <td data-label="Sijoitus"><span class="${getSijoitusClass(row.sijoitus)}">${row.sijoitus}</span></td>
-                                                    <td data-label="Etappi / Luokitus"><strong>${row.kuvaus}</strong></td>
-                                                    <td data-label="Päivämäärä">${row.pvm}</td>
-                                                </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    tuloksetContainer.innerHTML = htmlSisalto;
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
                 }
 
             } catch (error) {
