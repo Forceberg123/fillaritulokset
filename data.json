@@ -1,5 +1,5 @@
 {
-    "paivitetty": "2026-10-05 00:44:20",
+    "paivitetty": "2026-10-05 07:31:27",
     "suomalaiset": [
         {
             "nimi": "Axel Källberg",
@@ -14,30 +14,6 @@
             "talli": "UN Cycling Team"
         },
         {
-            "nimi": "Riku Övermark",
-            "talli": "Ei tallia / Seura ei määritelty"
-        },
-        {
-            "nimi": "Petja Teppo",
-            "talli": "UN Cycling Team"
-        },
-        {
-            "nimi": "Lauri Pitkänen",
-            "talli": "Ei tallia / Seura ei määritelty"
-        },
-        {
-            "nimi": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty"
-        },
-        {
-            "nimi": "Miko Pirinen",
-            "talli": "NSN Development Team"
-        },
-        {
-            "nimi": "Juuso Puhakka",
-            "talli": "TWD Länken"
-        },
-        {
             "nimi": "Anniina Ahtosalo",
             "talli": "Uno-X Mobility"
         },
@@ -48,440 +24,162 @@
         {
             "nimi": "Heidi Antikainen",
             "talli": "Minimax Cycling Team"
-        },
-        {
-            "nimi": "Maija Pentsinen",
-            "talli": "Ei tallia / Seura ei määritelty"
-        },
-        {
-            "nimi": "Viivi Turpeinen",
-            "talli": "Minimax WB Ladies"
-        },
-        {
-            "nimi": "Sanni Tuukkanen",
-            "talli": "Kasseien Fiets Huis CT"
         }
     ],
     "tulokset": [
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "General classificationGeneral classification",
+            "kilpailu": "3Stage 3- Hull › Beverley",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": "04.09"
         },
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "16.09",
+            "kilpailu": "4Stage 4- Rudkøbing › Faaborg",
+            "sijoitus": "3",
+            "pvm": "01.08"
+        },
+        {
+            "urheilija": "Axel Källberg",
+            "talli": "Lucky Sport Cycling Team",
+            "kilpailu": "National Championships Finland ME - Road Race(NC)",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "14.06"
         },
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "05.09",
+            "kilpailu": "National Championships Finland ME - ITT(NC)",
             "sijoitus": "2",
-            "pvm": "Ei määritelty"
+            "pvm": "13.06"
         },
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "04.09",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "01.08",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "14.06",
+            "kilpailu": "Lattomeriajo",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "19.04"
         },
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "13.06",
+            "kilpailu": "Boucle de l'Artois(1.2)",
             "sijoitus": "2",
-            "pvm": "Ei määritelty"
+            "pvm": "04.04"
         },
         {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "General classificationGeneral classification",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "04.06",
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "6Stage 6- Châtillon-sur-Cluses › Val d’Isère/Col de l'Iseran",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "25.08"
         },
         {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "24.05",
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "GP Capodarco Comunita Di Capodarco(1.2U)",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": "16.08"
         },
         {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "03.05",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "19.04",
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "33Mountains classification",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Axel Källberg",
-            "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "04.04",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
+            "pvm": ""
         },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "25.08",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "16.08",
+            "kilpailu": "34Youth classification",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": ""
         },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "09.08",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Mountains classificationMountains classification",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "General classificationGeneral classification",
+            "kilpailu": "32Points classification",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": ""
         },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Youth classificationYouth classification",
+            "kilpailu": "31General classification",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": ""
         },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Points classificationPoints classification",
+            "kilpailu": "4Stage 4- Stift Aigen-Schlägl › Stift Aigen-Schlägl",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": "07.06"
         },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "General classificationGeneral classification",
+            "kilpailu": "Flèche Ardennaise(1.2)",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "07.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "07.05",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "06.05",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "06.04",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "07.05"
         },
         {
             "urheilija": "Matias Ahtosalo",
             "talli": "UN Cycling Team",
-            "kilpailu": "13.06",
+            "kilpailu": "National Championships Finland ME - ITT(NC)",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "13.06"
         },
         {
             "urheilija": "Matias Ahtosalo",
             "talli": "UN Cycling Team",
-            "kilpailu": "04.06",
+            "kilpailu": "Rosendahl GP",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "24.05"
         },
         {
             "urheilija": "Matias Ahtosalo",
             "talli": "UN Cycling Team",
-            "kilpailu": "24.05",
+            "kilpailu": "Hyrylän Ajot",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Matias Ahtosalo",
-            "talli": "UN Cycling Team",
-            "kilpailu": "17.05",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Riku Övermark",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "14.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Petja Teppo",
-            "talli": "UN Cycling Team",
-            "kilpailu": "26.07",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Petja Teppo",
-            "talli": "UN Cycling Team",
-            "kilpailu": "14.06",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Petja Teppo",
-            "talli": "UN Cycling Team",
-            "kilpailu": "04.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Lauri Pitkänen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "13.06",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Lauri Pitkänen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "31.05",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Lauri Pitkänen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "17.05",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "14.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "13.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "31.05",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "14.05",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Severi Savukoski",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "02.05",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Miko Pirinen",
-            "talli": "NSN Development Team",
-            "kilpailu": "14.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Miko Pirinen",
-            "talli": "NSN Development Team",
-            "kilpailu": "13.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Miko Pirinen",
-            "talli": "NSN Development Team",
-            "kilpailu": "31.05",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Juuso Puhakka",
-            "talli": "TWD Länken",
-            "kilpailu": "14.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "17.05"
         },
         {
             "urheilija": "Anniina Ahtosalo",
             "talli": "Uno-X Mobility",
-            "kilpailu": "20.09",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "kilpailu": "National Championships Finland WE - Road Race(NC)",
+            "sijoitus": "2",
+            "pvm": "14.06"
         },
         {
             "urheilija": "Anniina Ahtosalo",
             "talli": "Uno-X Mobility",
-            "kilpailu": "14.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Anniina Ahtosalo",
-            "talli": "Uno-X Mobility",
-            "kilpailu": "13.06",
+            "kilpailu": "National Championships Finland WE - ITT(NC)",
             "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "13.06"
         },
         {
             "urheilija": "Wilma Aintila",
             "talli": "CANYON//SRAM",
-            "kilpailu": "General classificationGeneral classification",
+            "kilpailu": "National Championships Finland WE - Road Race(NC)",
             "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "pvm": "14.06"
         },
         {
             "urheilija": "Wilma Aintila",
             "talli": "CANYON//SRAM",
-            "kilpailu": "14.06",
-            "sijoitus": "3",
-            "pvm": "Ei määritelty"
+            "kilpailu": "National Championships Finland WE - ITT(NC)",
+            "sijoitus": "2",
+            "pvm": "13.06"
         },
         {
             "urheilija": "Wilma Aintila",
             "talli": "CANYON//SRAM",
-            "kilpailu": "13.06",
+            "kilpailu": "Lapinkylän tempo",
             "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Wilma Aintila",
-            "talli": "CANYON//SRAM",
-            "kilpailu": "31.05",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Maija Pentsinen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "26.07",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Maija Pentsinen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "03.05",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Maija Pentsinen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "02.05",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Maija Pentsinen",
-            "talli": "Ei tallia / Seura ei määritelty",
-            "kilpailu": "19.04",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Viivi Turpeinen",
-            "talli": "Minimax WB Ladies",
-            "kilpailu": "14.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Viivi Turpeinen",
-            "talli": "Minimax WB Ladies",
-            "kilpailu": "13.06",
-            "sijoitus": "2",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Viivi Turpeinen",
-            "talli": "Minimax WB Ladies",
-            "kilpailu": "31.05",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
-        },
-        {
-            "urheilija": "Sanni Tuukkanen",
-            "talli": "Kasseien Fiets Huis CT",
-            "kilpailu": "14.06",
-            "sijoitus": "1",
-            "pvm": "Ei määritelty"
+            "pvm": "31.05"
         }
     ],
     "tulevat_kisat": []
