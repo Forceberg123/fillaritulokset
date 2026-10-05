@@ -17,24 +17,14 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) FinnishCyclistsBot/1.0 (Hobby Project)"
 }
 
-def muunna_luokitus_suomeksi(kisan_nimi):
-    """Kääntää englanninkieliset viralliset luokitukset suomeksi."""
-    kisan_nimi = kisan_nimi.strip()
-    # Esim. "General classification" -> "Yleiskilpailu"
-    if "General classification" in kisan_nimi:
-        return kisan_nimi.replace("General classification", "Yleiskilpailu")
-    if "Mountains classification" in kisan_nimi:
-        return kisan_nimi.replace("Mountains classification", "Mäkikilpailu")
-    if "Points classification" in kisan_nimi:
-        return kisan_nimi.replace("Points classification", "Pistekilpailu")
-    if "Youth classification" in kisan_nimi:
-        return kisan_nimi.replace("Youth classification", "Nuorten kilpailu")
-    return kisan_nimi
-
 def jäsennä_pvm(pvm_str):
     """Muuntaa päivämäärämerkkijonon datetime-olioksi lajittelua varten."""
+    if not pvm_str:
+        return datetime(1900, 1, 1)
+    
     pvm_str = pvm_str.strip()
-    muodot = ['%d.%m.%Y', '%d.%m.']
+    # Poistetaan mahdolliset viikonpäivät tai ylimääräiset merkit
+    muodot = ['%d.%m.%Y', '%d.%m.', '%d.%m']
     for muoto in muodot:
         try:
             dt = datetime.strptime(pvm_str, muoto)
@@ -43,7 +33,7 @@ def jäsennä_pvm(pvm_str):
             return dt
         except ValueError:
             continue
-    return datetime.min
+    return datetime(1900, 1, 1)
 
 def hae_urheilijan_tiedot(urheilija):
     url = f"https://www.procyclingstats.com/rider/{urheilija['url_nimi']}"
@@ -76,21 +66,23 @@ def hae_urheilijan_tiedot(urheilija):
                             break
                     
                     if sijoitus:
-                        paivamaara = "Ei pvm"
-                        for t in tekstit[:3]:
-                            if '.' in t and len(t) >= 5:
+                        # Etsitään päivämäärä tarkemmin (etsitään kenttä jossa on piste ja pituutta vähintään 4 merkkiä)
+                        paivamaara = ""
+                        for t in tekstit:
+                            if '.' in t and any(char.isdigit() for char in t) and len(t) <= 10:
                                 paivamaara = t
                                 break
                         
+                        if not paivamaara:
+                            paivamaara = "01.01."
+
+                        # Etsitään kilpailun nimi linkistä
                         linkki = row.find('a', href=True)
                         kisan_nimi = ""
                         if linkki:
                             kisan_nimi = linkki.get_text(strip=True)
                         
                         if kisan_nimi and not kisan_nimi.isdigit():
-                            # Suomennetaan luokitukset (General classification -> Yleiskilpailu jne.)
-                            kisan_nimi = muunna_luokitus_suomeksi(kisan_nimi)
-                            
                             tulokset.append({
                                 "urheilija": urheilija["nimi"],
                                 "talli": urheilija["talli"],
@@ -122,7 +114,7 @@ def paivita_data():
         kaikki_tulevat.extend(tulevat)
         kaikki_tulokset.extend(tulokset)
 
-    # Järjestetään tulokset päivämäärän mukaan (uusimmat ensin)
+    # Järjestetään KAIKKI tulokset globaalisti päivämäärän mukaan: uusin aina ylimpänä
     kaikki_tulokset.sort(key=lambda x: jäsennä_pvm(x['pvm']), reverse=True)
 
     data = {
@@ -135,7 +127,7 @@ def paivita_data():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("data.json päivitetty onnistuneesti!")
+    print("data.json päivitetty onnistuneesti ja lajiteltu globaalisti tuoreimmasta vanhimpaan!")
 
 if __name__ == "__main__":
     paivita_data()
