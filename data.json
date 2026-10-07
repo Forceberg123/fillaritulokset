@@ -1,5 +1,5 @@
 {
-    "paivitetty": "2026-10-06 00:44:15",
+    "paivitetty": "2026-10-07 00:45:41",
     "suomalaiset": [
         {
             "nimi": "Axel Källberg",
@@ -23,6 +23,13 @@
         }
     ],
     "tulokset": [
+        {
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "Coppa Citta' Di San Daniele(1.2)",
+            "sijoitus": "19",
+            "pvm": "06.10"
+        },
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
