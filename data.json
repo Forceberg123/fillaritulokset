@@ -1,5 +1,5 @@
 {
-    "paivitetty": "2026-10-07 00:45:41",
+    "paivitetty": "2026-10-11 17:14:50",
     "suomalaiset": [
         {
             "nimi": "Axel Källberg",
@@ -23,6 +23,20 @@
         }
     ],
     "tulokset": [
+        {
+            "urheilija": "Axel Källberg",
+            "talli": "Lucky Sport Cycling Team",
+            "kilpailu": "European Continental Championships ME - ITT(CC)",
+            "sijoitus": "26",
+            "pvm": "07.10"
+        },
+        {
+            "urheilija": "Wilma Aintila",
+            "talli": "CANYON//SRAM",
+            "kilpailu": "European Continental Championships WU - ITT(CC)",
+            "sijoitus": "17",
+            "pvm": "07.10"
+        },
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
@@ -75,7 +89,7 @@
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "Textielprijs Vichte(Elite IND)",
+            "kilpailu": "Textielprijs Vichte(NAT)",
             "sijoitus": "DNF",
             "pvm": "22.09"
         },
@@ -145,7 +159,7 @@
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "Izegem Koers(Elite IND)",
+            "kilpailu": "Izegem Koers(NAT)",
             "sijoitus": "126",
             "pvm": "10.09"
         },
@@ -194,7 +208,7 @@
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "Omloop Mandel-Leie-Schelde(Elite IND)",
+            "kilpailu": "Omloop Mandel-Leie-Schelde(NAT)",
             "sijoitus": "57",
             "pvm": "29.08"
         },
@@ -311,13 +325,6 @@
             "pvm": "16.08"
         },
         {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "GP Capodarco Comunita Di Capodarco(1.2U)",
-            "sijoitus": "3",
-            "pvm": "16.08"
-        },
-        {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
             "kilpailu": "3Stage 3- Stokmarknes › Storheia Summit (Melbu)",
@@ -327,7 +334,7 @@
         {
             "urheilija": "Anniina Ahtosalo",
             "talli": "Uno-X Mobility",
-            "kilpailu": "GP Bolle p/b Van Eyck Sport - Oetingen (crit)(1.15 crit. )",
+            "kilpailu": "GP Bolle p/b Van Eyck Sport - Oetingen (crit)(NAT)",
             "sijoitus": "DNF",
             "pvm": "15.08"
         },
@@ -409,25 +416,11 @@
             "pvm": "24.07"
         },
         {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "4Stage 4- Valtournenche › Breuil Cervinia",
-            "sijoitus": "16",
-            "pvm": "19.07"
-        },
-        {
             "urheilija": "Wilma Aintila",
             "talli": "CANYON//SRAM",
             "kilpailu": "4Stage 4- Mechelen › Mechelen",
             "sijoitus": "83",
             "pvm": "19.07"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "3Stage 3- Saint-Christophe › Saint-Christophe",
-            "sijoitus": "6",
-            "pvm": "18.07"
         },
         {
             "urheilija": "Wilma Aintila",
@@ -444,13 +437,6 @@
             "pvm": "18.07"
         },
         {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "2Stage 2- Hône › Forte di Bard",
-            "sijoitus": "4",
-            "pvm": "17.07"
-        },
-        {
             "urheilija": "Anniina Ahtosalo",
             "talli": "Uno-X Mobility",
             "kilpailu": "2Stage 2- Zulte › Zulte",
@@ -463,13 +449,6 @@
             "kilpailu": "2Stage 2- Zulte › Zulte",
             "sijoitus": "84",
             "pvm": "17.07"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "1Stage 1 (ITT)- Passy › Passy Plaine-Joux",
-            "sijoitus": "49",
-            "pvm": "16.07"
         },
         {
             "urheilija": "Anniina Ahtosalo",
@@ -684,7 +663,7 @@
         {
             "urheilija": "Wilma Aintila",
             "talli": "CANYON//SRAM",
-            "kilpailu": "Lapinkylän tempo",
+            "kilpailu": "Lapinkylän tempo(NAT)",
             "sijoitus": "2",
             "pvm": "31.05"
         },
@@ -971,7 +950,7 @@
         {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
-            "kilpailu": "Lattomeriajo",
+            "kilpailu": "Lattomeriajo(NAT)",
             "sijoitus": "1",
             "pvm": "19.04"
         },
@@ -988,13 +967,6 @@
             "kilpailu": "Ronde van Limburg(1.1)",
             "sijoitus": "45",
             "pvm": "15.04"
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Tr. Città di S.Vendemiano - GP Industria & Commercio(1.2U)",
-            "sijoitus": "14",
-            "pvm": "12.04"
         },
         {
             "urheilija": "Anniina Ahtosalo",
@@ -1384,27 +1356,6 @@
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Mountains classification",
-            "sijoitus": "1",
-            "pvm": "01.01."
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Points classification",
-            "sijoitus": "7",
-            "pvm": "01.01."
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "General classification",
-            "sijoitus": "7",
-            "pvm": "01.01."
-        },
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
             "kilpailu": "Points classification",
             "sijoitus": "36",
             "pvm": "01.01."
@@ -1590,7 +1541,21 @@
             "kilpailu": "Vuelta a la Región de Murcia “Costa Cálida”(2.1)",
             "sijoitus": "70",
             "pvm": "89.3"
+        },
+        {
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "1- San Vendemiano › San Vendemiano",
+            "sijoitus": "14",
+            "pvm": "171.6"
         }
     ],
-    "tulevat_kisat": []
+    "tulevat_kisat": [
+        {
+            "urheilija": "Kasper Borremans",
+            "talli": "Bahrain Victorious Development Team",
+            "kilpailu": "Tr. Città di S.Vendemiano - GP Industria & Commercio(1.2U)",
+            "pvm": "12.04"
+        }
+    ]
 }
