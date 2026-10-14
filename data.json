@@ -1,5 +1,5 @@
 {
-    "paivitetty": "2026-10-13 17:17:23",
+    "paivitetty": "2026-10-14 17:29:02",
     "suomalaiset": [
         {
             "nimi": "Axel Källberg",
@@ -327,7 +327,7 @@
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "1- Capodarco › Capodarco",
+            "kilpailu": "GP Capodarco Comunita Di Capodarco(1.2U)",
             "sijoitus": "3",
             "pvm": "16.08"
         },
@@ -696,6 +696,13 @@
             "pvm": "04.06"
         },
         {
+            "urheilija": "Wilma Aintila",
+            "talli": "CANYON//SRAM",
+            "kilpailu": "Lapinkylän tempo(NAT)",
+            "sijoitus": "2",
+            "pvm": "31.05"
+        },
+        {
             "urheilija": "Axel Källberg",
             "talli": "Lucky Sport Cycling Team",
             "kilpailu": "Antwerp Port Epic / Sels Trophy(1.1)",
@@ -999,7 +1006,7 @@
         {
             "urheilija": "Kasper Borremans",
             "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "1- San Vendemiano › San Vendemiano",
+            "kilpailu": "Tr. Città di S.Vendemiano - GP Industria & Commercio(1.2U)",
             "sijoitus": "14",
             "pvm": "12.04"
         },
@@ -1599,18 +1606,5 @@
             "pvm": "01.01."
         }
     ],
-    "tulevat_kisat": [
-        {
-            "urheilija": "Kasper Borremans",
-            "talli": "Bahrain Victorious Development Team",
-            "kilpailu": "Tr. Città di S.Vendemiano - GP Industria & Commercio(1.2U)",
-            "pvm": "12.04"
-        },
-        {
-            "urheilija": "Wilma Aintila",
-            "talli": "CANYON//SRAM",
-            "kilpailu": "Lapinkylän tempo(NAT)",
-            "pvm": "31.05"
-        }
-    ]
+    "tulevat_kisat": []
 }
