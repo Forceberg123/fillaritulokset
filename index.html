@@ -22,7 +22,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 0 0 40px 0;
             line-height: 1.6;
         }
 
@@ -122,6 +122,34 @@
             padding: 1.5rem;
         }
 
+        /* Nappi */
+        .btn-container {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .load-more-btn {
+            background-color: var(--badge-bg);
+            color: #ffffff;
+            border: 1px solid var(--primary-color);
+            padding: 0.6rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .load-more-btn:hover {
+            background-color: var(--primary-hover);
+            color: white;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         /* Sijoitusbadge ja mitalivärit */
         .sijoitus-badge {
             display: inline-block;
@@ -193,9 +221,6 @@
                 text-align: left;
             }
 
-            /* Haluamasi järjestys mobiilissa: 
-               Jos haluat Sijoituksen ensimmäiseksi, vaihda order-numeroita keskenään!
-               Tässä nyt: Sijoitus (1), Urheilija (2), Kilpailu (3), Päivämäärä (4) */
             td[data-label="Sijoitus"] { order: 1; }
             td[data-label="Urheilija"] { order: 2; font-weight: 600; color: var(--primary-color); }
             td[data-label="Kilpailu"] { order: 3; color: #f8fafc; }
@@ -215,13 +240,32 @@
 
         <div class="card">
             <h2>Viimeisimmät tulokset</h2>
-            <div id="tulokset-container">
-                <p class="no-data">Ladataan tuloksia...</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sijoitus</th>
+                            <th>Urheilija</th>
+                            <th>Kilpailu</th>
+                            <th>Päivämäärä</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tulokset-body">
+                        <tr><td colspan="4" class="no-data">Ladataan tuloksia...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="btn-container hidden" id="nappi-container">
+                <button class="load-more-btn" id="nayta-lisaa-btn" onclick="naytaLisaaTulokset()">Näytä lisää tuloksia</button>
             </div>
         </div>
     </div>
 
     <script>
+        let kaikkiTulokset = [];
+        let naytettaviaMaara = 10;
+
         function getSijoitusClass(sijoitus) {
             const s = String(sijoitus).trim().toLowerCase();
             if (s === '1' || s === '1st' || s === '1.') return 'sijoitus-badge badge-1';
@@ -248,52 +292,57 @@
                     }
                 }
 
-                const tuloksetContainer = document.getElementById('tulokset-container');
                 if (data.tulokset && data.tulokset.length > 0) {
-                    tuloksetContainer.innerHTML = `
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Sijoitus</th>
-                                        <th>Urheilija</th>
-                                        <th>Kilpailu</th>
-                                        <th>Päivämäärä</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${data.tulokset.map(k => {
-                                        const kisaNimi = (k.etappi_tai_luokitus && k.etappi_tai_luokitus !== "Yksittäinen kilpailu")
-                                            ? `${k.kilpailu} (${k.etappi_tai_luokitus})`
-                                            : k.kilpailu;
-
-                                        let pvmMuotoiltu = k.pvm ? String(k.pvm).trim() : '';
-                                        if (pvmMuotoiltu && !pvmMuotoiltu.endsWith('.')) {
-                                            pvmMuotoiltu += '.';
-                                        }
-
-                                        return `
-                                            <tr>
-                                                <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                                                <td data-label="Urheilija"><strong>${k.urheilija}</strong></td>
-                                                <td data-label="Kilpailu">${kisaNimi}</td>
-                                                <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
-                                            </tr>
-                                        `;
-                                    }).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
+                    kaikkiTulokset = data.tulokset;
+                    paivitaTaulukko();
                 } else {
-                    tuloksetContainer.innerHTML = '<p class="no-data">Ei tuoreita tuloksia tällä hetkellä.</p>';
+                    document.getElementById('tulokset-body').innerHTML = '<tr><td colspan="4" class="no-data">Ei tuoreita tuloksia tällä hetkellä.</td></tr>';
                 }
 
             } catch (error) {
                 console.error('Virhe haettaessa tietoja:', error);
                 document.getElementById('update-info').innerText = 'Tietojen latauksessa tapahtui virhe.';
-                document.getElementById('tulokset-container').innerHTML = '<p class="no-data" style="color: #ef4444;">Virhe ladattaessa dataa.</p>';
+                document.getElementById('tulokset-body').innerHTML = '<tr><td colspan="4" class="no-data" style="color: #ef4444;">Virhe ladattaessa dataa.</td></tr>';
             }
+        }
+
+        function paivitaTaulukko() {
+            const tuloksetBody = document.getElementById('tulokset-body');
+            tuloksetBody.innerHTML = '';
+
+            const naytettavat = kaikkiTulokset.slice(0, naytettaviaMaara);
+
+            naytettavat.forEach(k => {
+                const tr = document.createElement('tr');
+                const kisaNimi = (k.etappi_tai_luokitus && k.etappi_tai_luokitus !== "Yksittäinen kilpailu")
+                    ? `${k.kilpailu} (${k.etappi_tai_luokitus})`
+                    : k.kilpailu;
+
+                let pvmMuotoiltu = k.pvm ? String(k.pvm).trim() : '';
+                if (pvmMuotoiltu && !pvmMuotoiltu.endsWith('.')) {
+                    pvmMuotoiltu += '.';
+                }
+
+                tr.innerHTML = `
+                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td data-label="Urheilija"><strong>${k.urheilija}</strong></td>
+                    <td data-label="Kilpailu">${kisaNimi}</td>
+                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
+                `;
+                tuloksetBody.appendChild(tr);
+            });
+
+            const nappiContainer = document.getElementById('nappi-container');
+            if (naytettaviaMaara >= kaikkiTulokset.length) {
+                nappiContainer.classList.add('hidden');
+            } else {
+                nappiContainer.classList.remove('hidden');
+            }
+        }
+
+        function naytaLisaaTulokset() {
+            naytettaviaMaara += 10;
+            paivitaTaulukko();
         }
 
         lataaData();
