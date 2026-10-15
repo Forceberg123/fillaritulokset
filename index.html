@@ -186,7 +186,7 @@
             display: none !important;
         }
 
-        /* Mobiilin korttinäkymä */
+        /* Mobiiliratkaisu: Muutetaan järjestystä ja tyyliä vain pienillä näytöillä */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
@@ -201,13 +201,13 @@
                 border: 1px solid var(--card-border);
                 border-radius: 8px;
                 margin-bottom: 0.75rem;
-                padding: 0.5rem;
+                padding: 0.6rem 0.8rem;
             }
             td {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 0.4rem 0.5rem;
+                padding: 0.3rem 0;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.03);
                 text-align: right;
             }
@@ -223,6 +223,16 @@
                 margin-right: 1rem;
                 text-align: left;
             }
+            /* Piilotetaan tiimin nimi mobiilissa tilaa viemästä */
+            .team-name {
+                display: none;
+            }
+            /* Mobiilin järjestys flexbox-ordereilla: Sijoitus, Urheilija, Kilpailu, Päivämäärä */
+            td.col-sijoitus { order: 1; }
+            td.col-urheilija { order: 2; }
+            td.col-urheilija .rider-name { color: var(--primary-color); font-size: 0.95rem; }
+            td.col-kilpailu { order: 3; }
+            td.col-pvm { order: 4; }
         }
     </style>
 </head>
@@ -274,7 +284,6 @@
 
         async function lataaData() {
             try {
-                // Lisätään aikaleima URL-osoitteeseen, jotta selain ei lataa vanhaa versiota välimuistista
                 const response = await fetch('data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error('Datan lataus epäonnistui');
                 
@@ -313,18 +322,17 @@
                 const talliHTML = k.talli ? `<span class="team-name">${k.talli}</span>` : '';
 
                 tr.innerHTML = `
-                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td data-label="Päivämäärä">${k.pvm}</td>
-                    <td data-label="Urheilija">
+                    <td class="col-sijoitus" data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td class="col-pvm" data-label="Päivämäärä">${k.pvm}</td>
+                    <td class="col-urheilija" data-label="Urheilija">
                         <span class="rider-name">${k.urheilija}</span>
                         ${talliHTML}
                     </td>
-                    <td data-label="Kilpailu">${kisaNimi}</td>
+                    <td class="col-kilpailu" data-label="Kilpailu">${kisaNimi}</td>
                 `;
                 tuloksetBody.appendChild(tr);
             });
 
-            // Näytetään tai piilotetaan lisää-nappi
             const nappiContainer = document.getElementById('nappi-container');
             if (naytettaviaMaara >= kaikkiTulokset.length) {
                 nappiContainer.classList.add('hidden');
