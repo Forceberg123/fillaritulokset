@@ -186,8 +186,7 @@
             display: none !important;
         }
 
-        /* Mobiilin korttinäkymä: Tietokoneella järjestys on Sijoitus, Päivämäärä, Urheilija, Kilpailu.
-           Mobiilissa pakotetaan järjestykseksi: Sijoitus, Urheilija, Kilpailu, Päivämäärä. */
+        /* Mobiilin korttinäkymä: Sijoitus, Urheilija, Kilpailu, Päivämäärä */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
@@ -228,8 +227,7 @@
             .team-name {
                 display: none;
             }
-            
-            /* Sarakkeiden järjestys mobiilissa:
+            /* Mobiilin järjestys sarakkeiden mukaan:
                1. Sijoitus (td:nth-child(1)) -> Order 1
                2. Urheilija (td:nth-child(3)) -> Order 2
                3. Kilpailu  (td:nth-child(4)) -> Order 3
@@ -247,7 +245,7 @@
 
     <header>
         <h1>Pyöräilytulokset 2026</h1>
-        <p>Suomalaisten maantiepyöräilijöiden tuloksia maailmalla.</p>
+        <p>Seuraa suomalaisten maantiepyöräilijöiden tuoreita tuloksia maailmalla.</p>
     </header>
 
     <div class="container">
@@ -340,16 +338,6 @@
                     pvmMuotoiltu += '.';
                 }
 
-                tr.innerHTML = `
-                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
-                    <td data-label="Urheilija">
-                        <span class="rider-name">${k.urheilija}</span>
-                        ${talliHTML}
-                    </td>
-                    <td data-label="Kilpailu">${kisaNili || kisaNimi}</td>
-                `;
-                // Korjataan pieni kirjoitusvirhe yllä olevalla rivillä varmuuden vuoksi:
                 tr.innerHTML = `
                     <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
                     <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
