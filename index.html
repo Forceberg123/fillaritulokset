@@ -186,7 +186,7 @@
             display: none !important;
         }
 
-        /* Mobiiliratkaisu: Tietokoneella normaali järjestys, mobiilissa mukautettu */
+        /* Mobiilin korttinäkymä: Sijoitus, Urheilija, Kilpailu, Päivämäärä */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
@@ -223,11 +223,11 @@
                 margin-right: 1rem;
                 text-align: left;
             }
-            /* Piilotetaan tiimin nimi mobiilissa tilaa viemästä */
+            /* Piilotetaan tiimin nimi mobiilissa */
             .team-name {
                 display: none;
             }
-            /* Mobiilin järjestys: Sijoitus (1), Urheilija (2), Kilpailu (3), Päivämäärä (4) */
+            /* Mobiilin järjestys flexbox-ordereilla */
             td.col-sijoitus { order: 1; }
             td.col-urheilija { order: 2; }
             td.col-urheilija .rider-name { color: var(--primary-color); font-size: 0.95rem; }
@@ -321,7 +321,7 @@
 
                 const talliHTML = k.talli ? `<span class="team-name">${k.talli}</span>` : '';
 
-                // Varmistetaan vielä varmuuden vuoksi JavaScriptin puolella, että päivämäärä päättyy pisteeseen
+                // Varmistetaan päivämäärän piste
                 let pvmMuotoiltu = k.pvm ? String(k.pvm).trim() : '';
                 if (pvmMuotoiltu && !pvmMuotoiltu.endsWith('.')) {
                     pvmMuotoiltu += '.';
