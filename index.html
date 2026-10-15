@@ -186,7 +186,7 @@
             display: none !important;
         }
 
-        /* Mobiiliratkaisu: Muutetaan järjestystä ja tyyliä vain pienillä näytöillä */
+        /* Mobiiliratkaisu: Tietokoneella normaali järjestys, mobiilissa mukautettu */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
@@ -227,7 +227,7 @@
             .team-name {
                 display: none;
             }
-            /* Mobiilin järjestys flexbox-ordereilla: Sijoitus, Urheilija, Kilpailu, Päivämäärä */
+            /* Mobiilin järjestys: Sijoitus (1), Urheilija (2), Kilpailu (3), Päivämäärä (4) */
             td.col-sijoitus { order: 1; }
             td.col-urheilija { order: 2; }
             td.col-urheilija .rider-name { color: var(--primary-color); font-size: 0.95rem; }
@@ -321,9 +321,15 @@
 
                 const talliHTML = k.talli ? `<span class="team-name">${k.talli}</span>` : '';
 
+                // Varmistetaan vielä varmuuden vuoksi JavaScriptin puolella, että päivämäärä päättyy pisteeseen
+                let pvmMuotoiltu = k.pvm ? String(k.pvm).trim() : '';
+                if (pvmMuotoiltu && !pvmMuotoiltu.endsWith('.')) {
+                    pvmMuotoiltu += '.';
+                }
+
                 tr.innerHTML = `
                     <td class="col-sijoitus" data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td class="col-pvm" data-label="Päivämäärä">${k.pvm}</td>
+                    <td class="col-pvm" data-label="Päivämäärä">${pvmMuotoiltu}</td>
                     <td class="col-urheilija" data-label="Urheilija">
                         <span class="rider-name">${k.urheilija}</span>
                         ${talliHTML}
