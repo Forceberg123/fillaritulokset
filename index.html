@@ -290,7 +290,14 @@
                 const data = await response.json();
 
                 if (data.paivitetty) {
-                    document.getElementById('update-info').innerText = `Viimeksi päivitetty: ${data.paivitetty}`;
+                    const [ pvmOsa, aikaOsa ] = data.paivitetty.split(' ');
+                    if (pvmOsa) {
+                        const [ vuosi, kuukausi, paiva ] = pvmOsa.split('-');
+                        const suomiPvm = `${paiva}.${kuukausi}.${vuosi}`;
+                        document.getElementById('update-info').innerText = `Viimeksi päivitetty: ${suomiPvm} klo ${aikaOsa}`;
+                    } else {
+                        document.getElementById('update-info').innerText = `Viimeksi päivitetty: ${data.paivitetty}`;
+                    }
                 }
 
                 if (data.tulokset && data.tulokset.length > 0) {
@@ -321,7 +328,6 @@
 
                 const talliHTML = k.talli ? `<span class="team-name">${k.talli}</span>` : '';
 
-                // Varmistetaan päivämäärän piste
                 let pvmMuotoiltu = k.pvm ? String(k.pvm).trim() : '';
                 if (pvmMuotoiltu && !pvmMuotoiltu.endsWith('.')) {
                     pvmMuotoiltu += '.';
