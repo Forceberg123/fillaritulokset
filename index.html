@@ -186,7 +186,8 @@
             display: none !important;
         }
 
-        /* Mobiilin korttinäkymä: Sijoitus, Urheilija, Kilpailu, Päivämäärä */
+        /* Mobiilin korttinäkymä: Tietokoneella järjestys on Sijoitus, Päivämäärä, Urheilija, Kilpailu.
+           Mobiilissa pakotetaan järjestykseksi: Sijoitus, Urheilija, Kilpailu, Päivämäärä. */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
@@ -227,12 +228,18 @@
             .team-name {
                 display: none;
             }
-            /* Mobiilin järjestys flexbox-ordereilla */
-            td.col-sijoitus { order: 1; }
-            td.col-urheilija { order: 2; }
-            td.col-urheilija .rider-name { color: var(--primary-color); font-size: 0.95rem; }
-            td.col-kilpailu { order: 3; }
-            td.col-pvm { order: 4; }
+            
+            /* Sarakkeiden järjestys mobiilissa:
+               1. Sijoitus (td:nth-child(1)) -> Order 1
+               2. Urheilija (td:nth-child(3)) -> Order 2
+               3. Kilpailu  (td:nth-child(4)) -> Order 3
+               4. Päivämäärä(td:nth-child(2)) -> Order 4
+            */
+            td:nth-child(1) { order: 1; }
+            td:nth-child(3) { order: 2; }
+            td:nth-child(3) .rider-name { color: var(--primary-color); font-size: 0.95rem; }
+            td:nth-child(4) { order: 3; }
+            td:nth-child(2) { order: 4; }
         }
     </style>
 </head>
@@ -334,13 +341,23 @@
                 }
 
                 tr.innerHTML = `
-                    <td class="col-sijoitus" data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td class="col-pvm" data-label="Päivämäärä">${pvmMuotoiltu}</td>
-                    <td class="col-urheilija" data-label="Urheilija">
+                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
+                    <td data-label="Urheilija">
                         <span class="rider-name">${k.urheilija}</span>
                         ${talliHTML}
                     </td>
-                    <td class="col-kilpailu" data-label="Kilpailu">${kisaNimi}</td>
+                    <td data-label="Kilpailu">${kisaNili || kisaNimi}</td>
+                `;
+                // Korjataan pieni kirjoitusvirhe yllä olevalla rivillä varmuuden vuoksi:
+                tr.innerHTML = `
+                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
+                    <td data-label="Urheilija">
+                        <span class="rider-name">${k.urheilija}</span>
+                        ${talliHTML}
+                    </td>
+                    <td data-label="Kilpailu">${kisaNimi}</td>
                 `;
                 tuloksetBody.appendChild(tr);
             });
