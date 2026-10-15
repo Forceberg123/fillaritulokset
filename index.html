@@ -122,6 +122,11 @@
             padding: 1.5rem;
         }
 
+        /* Urheilijan nimi - estetään rivittyminen */
+        .rider-name {
+            white-space: nowrap;
+        }
+
         /* Nappi */
         .btn-container {
             text-align: center;
@@ -181,50 +186,59 @@
             box-shadow: 0 2px 8px rgba(180, 83, 9, 0.3);
         }
 
-        /* Mobiilin korttinäkymä */
+        /* Mobiilin 2-rivinen CSS Grid -asettelu */
         @media screen and (max-width: 600px) {
             table thead {
                 display: none;
             }
-            table, tbody, tr, td {
+            table, tbody {
                 display: block;
                 width: 100%;
-                box-sizing: border-box;
             }
             tr {
-                background-color: rgba(30, 41, 59, 0.3);
-                border: 1px solid var(--card-border);
-                border-radius: 6px;
-                margin-bottom: 0.75rem;
-                padding: 0.5rem;
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                grid-template-rows: auto auto;
+                gap: 0.2rem 0.6rem;
+                align-items: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 0.6rem 0.2rem;
+            }
+            tr:hover {
+                background-color: transparent;
             }
             td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.35rem 0.4rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-                text-align: right;
-            }
-            td:last-child {
-                border-bottom: none;
-            }
-            td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                color: var(--text-light);
-                text-transform: uppercase;
-                font-size: 0.7rem;
-                margin-right: 1rem;
-                text-align: left;
+                display: block;
+                border: none;
+                padding: 0;
             }
 
-            td[data-label="Sijoitus"] { order: 1; }
-            td[data-label="Urheilija"] { order: 2; font-weight: 600; color: var(--primary-color); }
-            td[data-label="Kilpailu"] { order: 3; color: #f8fafc; }
-            td[data-label="Päivämäärä"] { order: 4; }
+            /* Ruudukon paikat solutittain */
+            td.col-sijoitus {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            td.col-urheilija {
+                grid-column: 2;
+                grid-row: 1;
+                font-weight: 600;
+                color: var(--primary-color);
+                font-size: 1rem;
+            }
+            td.col-pvm {
+                grid-column: 3;
+                grid-row: 1;
+                font-size: 0.82rem;
+                color: var(--text-light);
+                text-align: right;
+                white-space: nowrap;
+            }
+            td.col-kilpailu {
+                grid-column: 1 / -1; /* Vie koko kakkosrivin leveydeltään */
+                grid-row: 2;
+                font-size: 0.88rem;
+                color: var(--text-color);
+            }
         }
     </style>
 </head>
@@ -232,7 +246,7 @@
 
     <header>
         <h1>Pyöräilytulokset 2026</h1>
-        <p>Suomalaisten maantiepyöräilijöiden tuloksia maailmalla.</p>
+        <p>Seuraa suomalaisten maantiepyöräilijöiden tuoreita tuloksia maailmalla.</p>
     </header>
 
     <div class="container">
@@ -246,8 +260,8 @@
                         <tr>
                             <th>Sijoitus</th>
                             <th>Urheilija</th>
-                            <th>Kilpailu</th>
                             <th>Päivämäärä</th>
+                            <th>Kilpailu</th>
                         </tr>
                     </thead>
                     <tbody id="tulokset-body">
@@ -324,10 +338,10 @@
                 }
 
                 tr.innerHTML = `
-                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td data-label="Urheilija"><strong>${k.urheilija}</strong></td>
-                    <td data-label="Kilpailu">${kisaNimi}</td>
-                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
+                    <td class="col-sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td class="col-urheilija"><span class="rider-name"><strong>${k.urheilija}</strong></span></td>
+                    <td class="col-pvm">${pvmMuotoiltu}</td>
+                    <td class="col-kilpailu">${kisaNimi}</td>
                 `;
                 tuloksetBody.appendChild(tr);
             });
