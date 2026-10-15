@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suomalaisten maantiepyöräilijöiden tuloksia </title>
+    <title>Suomalaisten Pyöräilijöiden Tulokset 2026</title>
     <style>
         :root {
             --bg-color: #f8fafc;
@@ -12,6 +12,7 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --gold: #f59e0b;
             --silver: #94a3b8;
             --bronze: #d97706;
@@ -107,6 +108,31 @@
         .rider-name { font-weight: 600; }
         .team-name { font-size: 0.8rem; color: var(--text-muted); display: block; }
 
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .load-more-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .load-more-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         @media (max-width: 600px) {
             th, td { padding: 8px 6px; font-size: 0.85rem; }
             .team-name { display: none; }
@@ -136,53 +162,79 @@
                 <tr><td colspan="4" style="text-align:center;">Ladataan tuloksia...</td></tr>
             </tbody>
         </table>
+        
+        <div class="btn-container" id="nappi-container">
+            <button class="load-more-btn" id="nayta-lisaa-btn" onclick="naytaLisaaTulokset()">Näytä lisää tuloksia</button>
+        </div>
     </div>
 </div>
 
 <script>
+    let kaikkiTulokset = [];
+    let naytettaviaMaara = 10;
+
     async function lataaData() {
         try {
             const response = await fetch('data.json?t=' + new Date().getTime());
             if (!response.ok) throw new Error('Virhe ladattaessa dataa');
             const data = await response.json();
 
-            // Päivämäärä
             if (data.paivitetty) {
                 document.getElementById('paivitetty').textContent = `Päivitetty viimeksi: ${data.paivitetty}`;
             }
 
-            // Tulokset
-            const tuloksetBody = document.getElementById('tulokset-body');
-            tuloksetBody.innerHTML = '';
-
             if (data.tulokset && data.tulokset.length > 0) {
-                data.tulokset.forEach(item => {
-                    const tr = document.createElement('tr');
-                    
-                    let badgeClass = 'badge-other';
-                    if (item.sijoitus === '1' || item.sijoitus === '1st') badgeClass = 'badge-1';
-                    else if (item.sijoitus === '2' || item.sijoitus === '2nd') badgeClass = 'badge-2';
-                    else if (item.sijoitus === '3' || item.sijoitus === '3rd') badgeClass = 'badge-3';
-
-                    tr.innerHTML = `
-                        <td><span class="badge ${badgeClass}">${item.sijoitus}</span></td>
-                        <td>${item.pvm}</td>
-                        <td>
-                            <span class="rider-name">${item.urheilija}</span>
-                            <span class="team-name">${item.talli}</span>
-                        </td>
-                        <td>${item.kilpailu}</td>
-                    `;
-                    tuloksetBody.appendChild(tr);
-                });
+                kaikkiTulokset = data.tulokset;
+                paivitaTaulukko();
             } else {
-                tuloksetBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Ei tuloksia saatavilla.</td></tr>';
+                document.getElementById('tulokset-body').innerHTML = '<tr><td colspan="4" style="text-align:center;">Ei tuloksia saatavilla.</td></tr>';
+                document.getElementById('nappi-container').classList.add('hidden');
             }
 
         } catch (error) {
             console.error(error);
             document.getElementById('tulokset-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Virhe ladattaessa dataa.</td></tr>';
+            document.getElementById('nappi-container').classList.add('hidden');
         }
+    }
+
+    function paivitaTaulukko() {
+        const tuloksetBody = document.getElementById('tulokset-body');
+        tuloksetBody.innerHTML = '';
+
+        const naytettavat = kaikkiTulokset.slice(0, naytettaviaMaara);
+
+        naytettavat.forEach(item => {
+            const tr = document.createElement('tr');
+            
+            let badgeClass = 'badge-other';
+            if (item.sijoitus === '1' || item.sijoitus === '1st') badgeClass = 'badge-1';
+            else if (item.sijoitus === '2' || item.sijoitus === '2nd') badgeClass = 'badge-2';
+            else if (item.sijoitus === '3' || item.sijoitus === '3rd') badgeClass = 'badge-3';
+
+            tr.innerHTML = `
+                <td><span class="badge ${badgeClass}">${item.sijoitus}</span></td>
+                <td>${item.pvm}</td>
+                <td>
+                    <span class="rider-name">${item.urheilija}</span>
+                    <span class="team-name">${item.talli}</span>
+                </td>
+                <td>${item.kilpailu}</td>
+            `;
+            tuloksetBody.appendChild(tr);
+        });
+
+        // Piilotetaan nappi, jos kaikki tulokset ovat jo näkyvissä
+        if (naytettaviaMaara >= kaikkiTulokset.length) {
+            document.getElementById('nappi-container').classList.add('hidden');
+        } else {
+            document.getElementById('nappi-container').classList.remove('hidden');
+        }
+    }
+
+    function naytaLisaaTulokset() {
+        naytettaviaMaara += 10; // Näytetään 10 tulosta kerrallaan lisää
+        paivitaTaulukko();
     }
 
     lataaData();
