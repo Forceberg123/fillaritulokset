@@ -3,97 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suomalaispyöräilijöiden tuloksia</title>
+    <title>Suomalaisten Pyöräilijöiden Tulokset 2026</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131c2e;
-            --card-border: #1e293b;
-            --primary-color: #38bdf8;
-            --text-color: #f8fafc;
-            --text-light: #94a3b8;
-            --table-hover: #1a263d;
-            --badge-bg: #0369a1;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --primary: #2563eb;
+            --gold: #f59e0b;
+            --silver: #94a3b8;
+            --bronze: #d97706;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: white;
-            text-align: center;
-            padding: 2.5rem 1rem;
-            border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
-
-        header h1 {
-            margin: 0 0 0.5rem 0;
-            font-size: 2.2rem;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-        }
-
-        header p {
-            margin: 0;
-            font-size: 1rem;
-            color: var(--text-light);
+            padding: 24px 16px;
+            display: flex;
+            justify-content: center;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .updated-time {
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
 
         .card {
             background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--card-border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 24px;
         }
 
         h2 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--card-border);
-            padding-bottom: 0.6rem;
-            margin-top: 0;
             font-size: 1.25rem;
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            text-align: left;
             font-size: 0.95rem;
         }
 
         th, td {
-            padding: 0.7rem 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
-            background-color: rgba(30, 41, 59, 0.4);
+            color: var(--text-muted);
             font-weight: 600;
-            color: var(--text-light);
+            font-size: 0.85rem;
             text-transform: uppercase;
-            font-size: 0.7rem;
             letter-spacing: 0.05em;
         }
 
@@ -101,236 +89,104 @@
             border-bottom: none;
         }
 
-        tr:hover {
-            background-color: var(--table-hover);
-        }
-
-        .update-info {
-            text-align: right;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-top: -1rem;
-            margin-bottom: 1.5rem;
-            font-family: monospace;
-        }
-
-        .no-data {
-            color: var(--text-light);
-            font-style: italic;
-            text-align: center;
-            padding: 1.5rem;
-        }
-
-        /* Sijoitusbadge ja mitalivärit */
-        .sijoitus-badge {
-            display: inline-block;
-            background-color: var(--badge-bg);
-            color: #bae6fd;
-            padding: 0.2rem 0.6rem;
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            padding: 2px 8px;
             border-radius: 6px;
-            font-weight: 600;
             font-size: 0.85rem;
-            text-align: center;
-            min-width: 2rem;
         }
 
-        .badge-1 {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
-        }
+        .badge-1 { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .badge-2 { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+        .badge-3 { background-color: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+        .badge-other { background-color: #f8fafc; color: #64748b; }
 
-        .badge-2 {
-            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
-            color: #0f172a;
-            box-shadow: 0 2px 8px rgba(148, 163, 184, 0.3);
-        }
+        .rider-name { font-weight: 600; }
+        .team-name { font-size: 0.8rem; color: var(--text-muted); display: block; }
 
-        .badge-3 {
-            background: linear-gradient(135deg, #b45309, #92400e);
-            color: #fef3c7;
-            box-shadow: 0 2px 8px rgba(180, 83, 9, 0.3);
-        }
-
-        /* Mobiilin korttinäkymä */
-        @media screen and (max-width: 600px) {
-            table thead {
-                display: none;
-            }
-            table, tbody, tr, td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            tr {
-                background-color: rgba(30, 41, 59, 0.3);
-                border: 1px solid var(--card-border);
-                border-radius: 6px;
-                margin-bottom: 0.75rem;
-                padding: 0.5rem;
-                display: flex;
-                flex-direction: column;
-            }
-            td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.35rem 0.4rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-                text-align: right;
-            }
-            td:last-child {
-                border-bottom: none;
-            }
-            td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                color: var(--text-light);
-                text-transform: uppercase;
-                font-size: 0.7rem;
-                margin-right: 1rem;
-                text-align: left;
-            }
-
-            /* Mobiilin järjestys: Urheilija, Sija, Kisa, Päivä */
-            td[data-label="Urheilija"] { order: 1; font-weight: 600; color: var(--primary-color); }
-            td[data-label="Sijoitus"] { order: 2; }
-            td[data-label="Kilpailu"] { order: 3; color: #f8fafc; }
-            td[data-label="Päivämäärä"] { order: 4; }
+        @media (max-width: 600px) {
+            th, td { padding: 8px 6px; font-size: 0.85rem; }
+            .team-name { display: none; }
         }
     </style>
 </head>
 <body>
 
+<div class="container">
     <header>
-        <h1>Suomalaispyöräilijöiden tuloksia</h1>
-        <p>Seuraa suomalaisten maantiepyöräilijöiden tulevia kisoja ja tuoreita tuloksia.</p>
+        <h1>Suomalaisten Pyöräilijöiden Tulokset 2026</h1>
+        <div class="updated-time" id="paivitetty">Päivitetään...</div>
     </header>
 
-    <div class="container">
-        <div class="update-info" id="update-info">Ladataan päivitysaikaa...</div>
-
-        <!-- Tulevat kisat -->
-        <div class="card">
-            <h2>Tulevat kilpailut</h2>
-            <div id="tulevat-container">
-                <p class="no-data">Ei tulevia kilpailuja tiedossa tällä hetkellä.</p>
-            </div>
-        </div>
-
-        <!-- Viimeisimmät tulokset -->
-        <div class="card">
-            <h2>Viimeisimmät tulokset</h2>
-            <div id="tulokset-container">
-                <p class="no-data">Ei tuoreita tuloksia tällä hetkellä.</p>
-            </div>
-        </div>
+    <div class="card">
+        <h2>Uusimmat tulokset</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sija</th>
+                    <th>Pvm</th>
+                    <th>Urheilija</th>
+                    <th>Kilpailu</th>
+                </tr>
+            </thead>
+            <tbody id="tulokset-body">
+                <tr><td colspan="4" style="text-align:center;">Ladataan tuloksia...</td></tr>
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <script>
-        function getSijoitusClass(sijoitus) {
-            const s = String(sijoitus).trim().toLowerCase();
-            if (s === '1' || s === '1st' || s === '1.') return 'sijoitus-badge badge-1';
-            if (s === '2' || s === '2nd' || s === '2.') return 'sijoitus-badge badge-2';
-            if (s === '3' || s === '3rd' || s === '3.') return 'sijoitus-badge badge-3';
-            return 'sijoitus-badge';
-        }
+<script>
+    async function lataaData() {
+        try {
+            const response = await fetch('data.json?t=' + new Date().getTime());
+            if (!response.ok) throw new Error('Virhe ladattaessa dataa');
+            const data = await response.json();
 
-        // Apufunktio päivämäärän muuntamiseen vertailtavaan muotoon (DD.MM.YYYY)
-        function parsePvm(pvmStr) {
-            if (!pvmStr) return new Date(0);
-            const cleanPvm = String(pvmStr).split('-')[0].trim();
-            const parts = cleanPvm.split('.');
-            if (parts.length >= 3) {
-                return new Date(parts[2], parts[1] - 1, parts[0]);
+            // Päivämäärä
+            if (data.paivitetty) {
+                document.getElementById('paivitetty').textContent = `Päivitetty viimeksi: ${data.paivitetty}`;
             }
-            return new Date(0);
-        }
 
-        async function lataaData() {
-            try {
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error('Datan lataus epäonnistui');
-                
-                const data = await response.json();
+            // Tulokset
+            const tuloksetBody = document.getElementById('tulokset-body');
+            tuloksetBody.innerHTML = '';
 
-                if (data.paivitetty) {
-                    document.getElementById('update-info').innerText = `Viimeksi päivitetty: ${data.paivitetty}`;
-                }
+            if (data.tulokset && data.tulokset.length > 0) {
+                data.tulokset.forEach(item => {
+                    const tr = document.createElement('tr');
+                    
+                    let badgeClass = 'badge-other';
+                    if (item.sijoitus === '1' || item.sijoitus === '1st') badgeClass = 'badge-1';
+                    else if (item.sijoitus === '2' || item.sijoitus === '2nd') badgeClass = 'badge-2';
+                    else if (item.sijoitus === '3' || item.sijoitus === '3rd') badgeClass = 'badge-3';
 
-                // 1. Tulevat kisat (lähin ensin)
-                const tulevatContainer = document.getElementById('tulevat-container');
-                if (data.tulevat_kisat && data.tulevat_kisat.length > 0) {
-                    data.tulevat_kisat.sort((a, b) => parsePvm(a.pvm) - parsePvm(b.pvm));
-
-                    tulevatContainer.innerHTML = `
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Päivämäärä</th>
-                                        <th>Kilpailu</th>
-                                        <th>Urheilija</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${data.tulevat_kisat.map(k => `
-                                        <tr>
-                                            <td data-label="Päivämäärä">${k.pvm}</td>
-                                            <td data-label="Kilpailu"><strong>${k.kilpailu}</strong></td>
-                                            <td data-label="Urheilija">${k.urheilija}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
+                    tr.innerHTML = `
+                        <td><span class="badge ${badgeClass}">${item.sijoitus}</span></td>
+                        <td>${item.pvm}</td>
+                        <td>
+                            <span class="rider-name">${item.urheilija}</span>
+                            <span class="team-name">${item.talli}</span>
+                        </td>
+                        <td>${item.kilpailu}</td>
                     `;
-                }
-
-                // 2. Viimeisimmät tulokset (pakotettu globaali aikajärjestys: uusin ensin kaikkien urheilijoiden osalta)
-                const tuloksetContainer = document.getElementById('tulokset-container');
-                if (data.tulokset && data.tulokset.length > 0) {
-                    // Järjestetään koko tuloslista päivämäärän mukaan laskevasti (uusin ensin)
-                    data.tulokset.sort((a, b) => parsePvm(b.pvm) - parsePvm(a.pvm));
-
-                    tuloksetContainer.innerHTML = `
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Sijoitus</th>
-                                        <th>Urheilija</th>
-                                        <th>Kilpailu</th>
-                                        <th>Päivämäärä</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${data.tulokset.map(k => {
-                                        const kisaNimi = (k.etappi_tai_luokitus && k.etappi_tai_luokitus !== "Yksittäinen kilpailu")
-                                            ? `${k.kilpailu} (${k.etappi_tai_luokitus})`
-                                            : k.kilpailu;
-                                        return `
-                                            <tr>
-                                                <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                                                <td data-label="Urheilija"><strong>${k.urheilija}</strong></td>
-                                                <td data-label="Kilpailu">${kisaNimi}</td>
-                                                <td data-label="Päivämäärä">${k.pvm}</td>
-                                            </tr>
-                                        `;
-                                    }).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-                }
-
-            } catch (error) {
-                console.error('Virhe haettaessa tietoja:', error);
-                document.getElementById('update-info').innerText = 'Tietojen latauksessa tapahtui virhe (odottaa skriptin ajoa).';
+                    tuloksetBody.appendChild(tr);
+                });
+            } else {
+                tuloksetBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Ei tuloksia saatavilla.</td></tr>';
             }
-        }
 
-        lataaData();
-    </script>
+        } catch (error) {
+            console.error(error);
+            document.getElementById('tulokset-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Virhe ladattaessa dataa.</td></tr>';
+        }
+    }
+
+    lataaData();
+</script>
+
 </body>
 </html>
