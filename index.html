@@ -227,17 +227,18 @@
             .team-name {
                 display: none;
             }
-            /* Mobiilin järjestys sarakkeiden mukaan:
-               1. Sijoitus (td:nth-child(1)) -> Order 1
-               2. Urheilija (td:nth-child(3)) -> Order 2
-               3. Kilpailu  (td:nth-child(4)) -> Order 3
-               4. Päivämäärä(td:nth-child(2)) -> Order 4
+            
+            /* Pakotetaan mobiilissa täsmällinen järjestys luokkien avulla:
+               1. Sijoitus -> order: 1
+               2. Urheilija -> order: 2
+               3. Kilpailu  -> order: 3
+               4. Päivämäärä-> order: 4
             */
-            td:nth-child(1) { order: 1; }
-            td:nth-child(3) { order: 2; }
-            td:nth-child(3) .rider-name { color: var(--primary-color); font-size: 0.95rem; }
-            td:nth-child(4) { order: 3; }
-            td:nth-child(2) { order: 4; }
+            td.col-sijoitus { order: 1; }
+            td.col-urheilija { order: 2; }
+            td.col-urheilija .rider-name { color: var(--primary-color); font-size: 0.95rem; }
+            td.col-kilpailu { order: 3; }
+            td.col-pvm { order: 4; }
         }
     </style>
 </head>
@@ -339,13 +340,13 @@
                 }
 
                 tr.innerHTML = `
-                    <td data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
-                    <td data-label="Päivämäärä">${pvmMuotoiltu}</td>
-                    <td data-label="Urheilija">
+                    <td class="col-sijoitus" data-label="Sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td class="col-pvm" data-label="Päivämäärä">${pvmMuotoiltu}</td>
+                    <td class="col-urheilija" data-label="Urheilija">
                         <span class="rider-name">${k.urheilija}</span>
                         ${talliHTML}
                     </td>
-                    <td data-label="Kilpailu">${kisaNimi}</td>
+                    <td class="col-kilpailu" data-label="Kilpailu">${kisaNimi}</td>
                 `;
                 tuloksetBody.appendChild(tr);
             });
