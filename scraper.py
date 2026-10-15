@@ -22,11 +22,13 @@ def jäsennä_pvm(pvm_str):
     if not pvm_str:
         return datetime(1900, 1, 1)
     
-    pvm_str = str(pvm_str).strip()
-    muodot = ['%d.%m.%Y', '%d.%m.', '%d.%m']
+    # Poistetaan ylimääräiset välilyönnit ja mahdolliset tuplapisteet
+    pvm_clean = str(pvm_str).strip().rstrip('.')
+    
+    muodot = ['%d.%m.%Y', '%d.%m']
     for muoto in muodot:
         try:
-            dt = datetime.strptime(pvm_str, muoto)
+            dt = datetime.strptime(pvm_clean, muoto)
             if dt.year == 1900:
                 dt = dt.replace(year=2026)
             return dt
@@ -72,7 +74,7 @@ def hae_urheilijan_tulokset(urheilija):
                     if not kisan_nimi or kisan_nimi.isdigit():
                         continue
 
-                    # Tarkistetaan onko rivillä sijoitus (kertoo menneestä tuloksesta)
+                    # Tarkistetaan onko rivillä sijoitus
                     sijoitus = ""
                     for t in tekstit[:4]:
                         if t.isdigit() or t in ["1st", "2nd", "3rd", "OTL", "DNF"]:
@@ -82,6 +84,12 @@ def hae_urheilijan_tulokset(urheilija):
                     if sijoitus:
                         if not paivamaara:
                             paivamaara = "01.01."
+                        else:
+                            # Varmistetaan että pvm päättyy pisteeseen (esim. "15.10.")
+                            paivamaara = paivamaara.strip()
+                            if not paivamaara.endswith('.'):
+                                paivamaara += '.'
+
                         tulokset.append({
                             "urheilija": urheilija["nimi"],
                             "talli": urheilija["talli"],
@@ -111,7 +119,7 @@ def paivita_data():
         tulokset = hae_urheilijan_tulokset(kusk)
         kaikki_tulokset.extend(tulokset)
 
-    # Lajitellaan tulokset: uusin ensin (laskeva)
+    # Lajitellaan tulokset: uusin ensin
     kaikki_tulokset.sort(key=lambda x: jäsennä_pvm(x['pvm']), reverse=True)
 
     data = {
@@ -123,7 +131,7 @@ def paivita_data():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("data.json päivitetty onnistuneesti (vain tulokset)! ")
+    print("data.json päivitetty onnistuneesti pisteellisillä päivämäärillä!")
 
 if __name__ == "__main__":
     paivita_data()
