@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 SEURATTAVAT = [
     # Miehet
@@ -22,7 +23,6 @@ def jäsennä_pvm(pvm_str):
     if not pvm_str:
         return datetime(1900, 1, 1)
     
-    # Poistetaan ylimääräiset välilyönnit ja mahdolliset tuplapisteet
     pvm_clean = str(pvm_str).strip().rstrip('.')
     
     muodot = ['%d.%m.%Y', '%d.%m']
@@ -65,11 +65,14 @@ def hae_urheilijan_tulokset(urheilija):
                             paivamaara = t
                             break
                     
-                    # Etsitään kilpailun nimi linkistä
+                    # Etsitään kilpailun nimi ja linkki
                     linkki = row.find('a', href=True)
                     kisan_nimi = ""
+                    kilpailu_url = ""
                     if linkki:
                         kisan_nimi = linkki.get_text(strip=True)
+                        href = linkki['href']
+                        kilpailu_url = urljoin("https://www.procyclingstats.com/", href)
                     
                     if not kisan_nimi or kisan_nimi.isdigit():
                         continue
@@ -85,7 +88,6 @@ def hae_urheilijan_tulokset(urheilija):
                         if not paivamaara:
                             paivamaara = "01.01."
                         else:
-                            # Varmistetaan että pvm päättyy pisteeseen (esim. "15.10.")
                             paivamaara = paivamaara.strip()
                             if not paivamaara.endswith('.'):
                                 paivamaara += '.'
@@ -95,7 +97,8 @@ def hae_urheilijan_tulokset(urheilija):
                             "talli": urheilija["talli"],
                             "kilpailu": kisan_nimi,
                             "sijoitus": sijoitus,
-                            "pvm": paivamaara
+                            "pvm": paivamaara,
+                            "url": kilpailu_url
                         })
 
     except Exception as e:
@@ -131,7 +134,7 @@ def paivita_data():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("data.json päivitetty onnistuneesti pisteellisillä päivämäärillä!")
+    print("data.json päivitetty onnistuneesti linkkien kanssa!")
 
 if __name__ == "__main__":
     paivita_data()
