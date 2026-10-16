@@ -122,7 +122,6 @@
             padding: 1.5rem;
         }
 
-        /* Urheilijan nimi - estetään rivittyminen */
         .rider-name {
             white-space: nowrap;
         }
@@ -155,7 +154,12 @@
             display: none !important;
         }
 
-        /* Sijoitusbadge ja mitalivärit */
+        /* Sijoitusbadge, linkkimuotoilu ja mitalivärit */
+        .sijoitus-link {
+            text-decoration: none;
+            display: inline-block;
+        }
+
         .sijoitus-badge {
             display: inline-block;
             background-color: var(--badge-bg);
@@ -166,6 +170,12 @@
             font-size: 0.85rem;
             text-align: center;
             min-width: 2rem;
+            transition: transform 0.15s ease, filter 0.15s ease;
+        }
+
+        .sijoitus-link:hover .sijoitus-badge {
+            transform: scale(1.08);
+            filter: brightness(1.2);
         }
 
         .badge-1 {
@@ -213,7 +223,6 @@
                 padding: 0;
             }
 
-            /* Ruudukon paikat solutittain */
             td.col-sijoitus {
                 grid-column: 1;
                 grid-row: 1;
@@ -234,7 +243,7 @@
                 white-space: nowrap;
             }
             td.col-kilpailu {
-                grid-column: 1 / -1; /* Vie koko kakkosrivin leveydeltään */
+                grid-column: 1 / -1;
                 grid-row: 2;
                 font-size: 0.88rem;
                 color: var(--text-color);
@@ -245,8 +254,8 @@
 <body>
 
     <header>
-        <h1>Pyöräilytulokset</h1>
-        <p>Suomalaisten maantiepyöräilijöiden tuloksia maailmalla.</p>
+        <h1>Pyöräilytulokset 2026</h1>
+        <p>Seuraa suomalaisten maantiepyöräilijöiden tuoreita tuloksia maailmalla.</p>
     </header>
 
     <div class="container">
@@ -337,8 +346,14 @@
                     pvmMuotoiltu += '.';
                 }
 
+                // Luodaan linkillinen tai linkitön sijoitusbadge
+                const url = k.url || k.linkki;
+                const sijoitusHtml = url 
+                    ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="sijoitus-link" title="Avaa tulokset ProCyclingStatsissa"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></a>`
+                    : `<span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span>`;
+
                 tr.innerHTML = `
-                    <td class="col-sijoitus"><span class="${getSijoitusClass(k.sijoitus)}">${k.sijoitus}</span></td>
+                    <td class="col-sijoitus">${sijoitusHtml}</td>
                     <td class="col-urheilija"><span class="rider-name"><strong>${k.urheilija}</strong></span></td>
                     <td class="col-pvm">${pvmMuotoiltu}</td>
                     <td class="col-kilpailu">${kisaNimi}</td>
