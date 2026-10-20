@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import json
 import requests
 from bs4 import BeautifulSoup
@@ -115,6 +115,31 @@ def hae_urheilijan_tulokset(urheilija):
 
     return uniset_tulokset
 
+def hae_suomen_aika():
+    """Määrittää tarkan Suomen ajan (huomioi kesä- ja talviajan automaattisesti)."""
+    utc_nyt = datetime.now(timezone.utc)
+    
+    # Yksinkertaistettu tarkistus EU:n kesäajalle (maaliskuun viimeinen su - lokakuun viimeinen su)
+    # Vuonna 2026 kesäaika päättyy 25.10.2026
+    vuosi = utc_nyt.year
+    
+    # Maaliskuun viimeinen sunnuntai
+    maalis_tokat = datetime(vuosi, 3, 31, tzinfo=timezone.utc)
+    maalis_viim_su = maalis_tokat - timedelta(days=(maalis_tokat.weekday() + 1) % 7)
+    maalis_viim_su = maalis_viim_su.replace(hour=1) # klo 01:00 UTC
+    
+    # Lokakuun viimeinen sunnuntai
+    loka_tokat = datetime(vuosi, 10, 31, tzinfo=timezone.utc)
+    loka_viim_su = loka_tokat - timedelta(days=(loka_tokat.weekday() + 1) % 7)
+    loka_viim_su = loka_viim_su.replace(hour=1) # klo 01:00 UTC
+
+    onko_kesäaika = maalis_viim_su <= utc_nyt < loka_viim_su
+    
+    # Kesäaika UTC+3, talviaika UTC+2
+    aikavyohykke_ero = timedelta(hours=3 if onko_kesäaika else 2)
+    suomen_aika = utc_nyt + aikavyohykke_ero
+    return suomen_aika.strftime("%Y-%m-%d %H:%M:%S")
+
 def paivita_data():
     kaikki_tulokset = []
 
@@ -126,7 +151,7 @@ def paivita_data():
     kaikki_tulokset.sort(key=lambda x: jäsennä_pvm(x['pvm']), reverse=True)
 
     data = {
-        "paivitetty": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "paivitetty": hae_suomen_aika(),
         "suomalaiset": [{"nimi": k["nimi"], "talli": k["talli"]} for k in SEURATTAVAT],
         "tulokset": kaikki_tulokset
     }
@@ -134,7 +159,7 @@ def paivita_data():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("data.json päivitetty onnistuneesti linkkien kanssa!")
+    print("data.json päivitetty onnistuneesti Suomen ajalla!")
 
 if __name__ == "__main__":
     paivita_data()
